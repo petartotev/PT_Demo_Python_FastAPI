@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "96ee53fd-96fb-412e-af17-cc68c9483687",
+		"name": "PT_Demo_Python_FastAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23140527"
+	},
+	"item": [
+		{
+			"name": "SetKeyValue",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url-http-app-docker-container}}/set/petar/totev",
+					"host": [
+						"{{url-http-app-docker-container}}"
+					],
+					"path": [
+						"set",
+						"petar",
+						"totev"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetKey",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-http-app-docker-container}}/get/petar",
+					"host": [
+						"{{url-http-app-docker-container}}"
+					],
+					"path": [
+						"get",
+						"petar"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url-http-app-docker-container",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
