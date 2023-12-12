@@ -132,9 +132,20 @@ docker run -d -p 8000:80 --name my-fastapi-app-container my-fastapi-app
 
 ![scrot-docker-containers](./res/scrot-docker-containers.png)
 
-6. Set a key-value in Redis using the following `[POST]` endpoint:
+6. Set a key-value in Redis using either of the following `[POST]` endpoints:
 ```
 curl -X POST "http://localhost:8000/set/mykey/myvalue"
+```
+or
+```
+curl -X POST "http://localhost:8000/set/"
+```
+with Body:
+```
+{
+    "key": "maya",
+    "value": "toteva"
+}
 ```
 
 7. Get the key-value from Redis using the following `[GET]` endpoint:
@@ -142,7 +153,21 @@ curl -X POST "http://localhost:8000/set/mykey/myvalue"
 curl "http://localhost:8000/get/mykey"
 ```
 
-8. Clean up Docker infrastructure:
+8. Update the key-value from Redis using the following `[PUT]` endpoint:
+```
+curl "http://localhost:8000/update/mykey"
+```
+with Body:
+```
+"toteva cute little girl"
+```
+
+9. Delete the key-value from Redis using the following `[DELETE]` endpoint:
+```
+curl "http://localhost:8000/delete/mykey"
+```
+
+10. Clean up Docker infrastructure:
 
 ```
 docker stop my-fastapi-app-container
