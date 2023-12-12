@@ -4,19 +4,26 @@
 
 ## Contents
 - [Setup on Windows](#setup-on-windows)
-- [FastAPI using Redis in Docker containers0](#fastapi-using-redis-in-docker-containers)
+- [FastAPI using Redis in Docker containers](#fastapi-using-redis-in-docker-containers)
+- [Terms](#terms)
 - [Links](#links)
 
 ## Setup on Windows
 
 1. Download Python from [the official website](https://www.python.org/downloads/) and install the latest LTS (long term support).
 
-2. Execute the following command to install FastAPI:
+2. Install `FastAPI` by executing *either* of the following commands:
+```
+pip install fastapi
+```
 ```
 py -m pip install fastapi
 ```
 
-3. Execute the following command to install Uvicorn ASGI server for production:
+3. Install `Uvicorn ASGI server` for production by executing *either* of the following commands:
+```
+pip install "uvicorn[standard]"
+```
 ```
 py -m pip install "uvicorn[standard]"
 ```
@@ -25,24 +32,24 @@ py -m pip install "uvicorn[standard]"
 
 ```
 from typing import Union
-
 from fastapi import FastAPI
 
 app = FastAPI()
 
-
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
-
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 ```
 
-5. Run the ASGI server from the main.py directory using the following command:
+5. Run the ASGI server from the main.py directory using *either* of the following command:
 
+```
+uvicorn main:app --reload
+```
 ```
 py -m uvicorn main:app --reload
 ```
@@ -67,6 +74,7 @@ def get_redis():
     # Assuming you have a Redis container running on localhost:6379
     # return Redis(host="localhost", port=6379)
     return Redis(host="192.168.1.12", port=6379)
+
 def set_key_value(redis: Redis, key: str, value: str):
     try:
         redis.set(key, value)
@@ -124,7 +132,7 @@ docker run -d -p 8000:80 --name my-fastapi-app-container my-fastapi-app
 
 ![scrot-docker-containers](./res/scrot-docker-containers.png)
 
-6. Set key-value in Redis using the following `[POST]` endpoint:
+6. Set a key-value in Redis using the following `[POST]` endpoint:
 ```
 curl -X POST "http://localhost:8000/set/mykey/myvalue"
 ```
@@ -142,6 +150,11 @@ docker rm my-fastapi-app-container
 docker stop my-redis
 docker rm my-redis
 ```
+
+## Terms
+- [`ASGI (Asynchronous Server Gateway Interface)`](https://asgi.readthedocs.io/en/latest/) = a spiritual successor to WSGI, intended to provide a standard interface between async-capable Python web servers, frameworks, and applications.
+- [`pip`](https://pypi.org/project/pip/) = the package installer for Python, similar to `npm` package manager for JavaScript and `NuGet` for .NET.
+- [`Uvicorn`](https://www.uvicorn.org/) = ASGI web server implementation for Python, filling the gap for a minimal low-level server/application interface for async frameworks.<br>Uvicorn currently supports HTTP/1.1 and WebSockets.
 
 ## Links
 - https://fastapi.tiangolo.com/
